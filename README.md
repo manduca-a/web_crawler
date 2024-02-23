@@ -17,7 +17,7 @@
   
 </p>
 
-<img width="100%" align="centre" src="https://cdn.discordapp.com/attachments/1141162711464550430/1182114732078006352/phantom.png" />
+<img width="100%" align="centre" src="https://cdn.discordapp.com/attachments/1141162711464550430/1182114732078006352/phantom.png?ex=65e908a2&is=65d693a2&hm=7b10b8213a33d570f6a466603dc370acaae247718896af61edccc59fdeca9d12&" />
 
 <be>
 
