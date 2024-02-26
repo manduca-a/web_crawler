@@ -17,7 +17,7 @@
   
 </p>
 
-<img width="100%" align="centre" src="https://cdn.discordapp.com/attachments/1141162711464550430/1182114732078006352/phantom.png?ex=65e908a2&is=65d693a2&hm=7b10b8213a33d570f6a466603dc370acaae247718896af61edccc59fdeca9d12&" />
+<img width="100%" align="centre" src="https://github.com/spyboy-productions/PhantomCrawler/blob/main/image/phantom%20(1).png" />
 
 <be>
 
@@ -70,6 +70,6 @@ PhantomCrawler is intended for educational and testing purposes only. Users are 
 
 ### ⭔ Snapshots:
 ---
-<img width="100%" align="centre" src="https://cdn.discordapp.com/attachments/1141162711464550430/1181285241978093638/Screenshot_2023-12-04_at_9.08.26_PM.png" />
+<img width="100%" align="centre" src="https://github.com/spyboy-productions/PhantomCrawler/blob/main/image/Screenshot_2023-12-04_at_9.08.26_PM.png" />
 
 <h4 align="center"> If you find this GitHub repo useful, please consider giving it a star! ⭐️ </h4> 
