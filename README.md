@@ -21,7 +21,7 @@
 
 <be>
 
-PhantomCrawler allows users to simulate website interactions through different proxy IP addresses. It leverages Python, requests, and BeautifulSoup to offer a simple and effective way to test website behaviour under varied proxy configurations.
+PhantomCrawler is a security testing and research tool that simulates website interactions from different proxy IP addresses to analyze how websites behave under varied network and geolocation conditions.
 
 **Features:**
 - Utilizes a list of proxy IP addresses from a specified file.
@@ -32,7 +32,7 @@ PhantomCrawler allows users to simulate website interactions through different p
 
 **Usage:**
 - **POC Testing:** Simulate website interactions to assess functionality under different proxy setups.
-- **Web Traffic Increase:** Boost website hits by generating requests from multiple proxy IPs.
+- **Traffic Behavior Testing:** Analyze how websites respond to requests originating from different IP addresses and network locations.
 - **Proxy Rotation Testing:** Evaluate the effectiveness of rotating proxy IPs.
 - **Web Scraping Testing:** Assess web scraping tasks under different proxy configurations.
 - **DDoS Awareness:** Caution: The tool has the potential for misuse as a DDoS tool. Ensure responsible and ethical use.
