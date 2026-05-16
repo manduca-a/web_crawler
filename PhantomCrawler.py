@@ -1,6 +1,11 @@
 import concurrent.futures
 import requests
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse
+
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+# Disable warnings for unverified HTTPS requests
 
 twitter_url = 'https://spyboy.in/twitter'
 discord = 'https://spyboy.in/Discord'
@@ -45,7 +50,7 @@ def read_proxy_list(file_path):
 
 
 # Get user input for website URL
-website_url = input(f"{R}Enter the website URL: {W}")  # https://spyboy.blog
+website_url = input(f"{R}Enter the website URL: {W}")
 
 # Get user input for the proxy list file
 proxy_file_path = input(f"{R}Enter the path to the proxy list file: {W}")  # valid_proxy.txt
@@ -60,34 +65,46 @@ def visit_link(proxy, website_url, link):
         with requests.get(absolute_link, proxies=proxy, timeout=5) as response:
             response.raise_for_status()
             print(f"{C}Proxy {proxy['http']} - {G}Visiting: {absolute_link}")
-    except requests.exceptions.RequestException as e:
-        print(f"{R}Error with proxy {proxy['http']}{Y}: {e}")
+    except requests.exceptions.RequestException:
+        print(f"{R}Error with proxy {proxy['http']}{Y}")
 
 
 # Make requests concurrently using threading
 with concurrent.futures.ThreadPoolExecutor() as executor:
     futures = []
     for proxy_info in proxies:
-        # Split the proxy information into IP and port
-        proxy_ip, proxy_port = proxy_info.split(":")
+        proxy_info = proxy_info.strip()
+        if not proxy_info:
+            continue
 
-        # Set up the proxy
-        proxy = {"http": f"http://{proxy_ip}:{proxy_port}", "https": f"http://{proxy_ip}:{proxy_port}"}
-
-        # Make a request using the proxy
         try:
-            with requests.get(website_url, proxies=proxy, timeout=5) as response:
+            parsed = urlparse(proxy_info)
+            protocol = parsed.scheme
+            ip_port = parsed.netloc
+
+            if not protocol:
+                protocol = "http"
+                ip_port = proxy_info
+
+            proxy_url = f"{protocol}://{ip_port}"
+            proxy = {
+                "http": proxy_url,
+                "https": proxy_url
+            }
+            
+            # set verify=False to ignore SSL certificate errors
+            with requests.get(website_url, proxies=proxy, timeout=5, verify=False) as response:
                 response.raise_for_status()
                 soup = BeautifulSoup(response.text, 'html.parser')
 
-                # Extract all links from the page
                 links = [link.get('href') for link in soup.find_all('a') if link.get('href')]
 
-                # Submit concurrent requests for each link
                 for link in links:
                     futures.append(executor.submit(visit_link, proxy, website_url, link))
+                    
         except requests.exceptions.RequestException as e:
-            print(f"{R}Error with proxy {proxy['http']} {Y}: {e}")
+            print(f"{R}Error with proxy {proxy_url} {Y}: {e}")
+        except Exception as parser_error:
+            print(f"{R}Error parsing line '{proxy_info}': {parser_error}")
 
-    # Wait for all threads to complete
     concurrent.futures.wait(futures)
