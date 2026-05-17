@@ -62,7 +62,14 @@ proxies = read_proxy_list(proxy_file_path)
 def visit_link(proxy, website_url, link):
     try:
         absolute_link = requests.compat.urljoin(website_url, link)
-        with requests.get(absolute_link, proxies=proxy, timeout=5) as response:
+
+        # add a user-agent header to mimic a real browser and avoid potential blocking by the website
+
+        headers = {
+            "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/148.0.7778.166 Mobile/15E148 Safari/604.1"
+        }
+
+        with requests.get(absolute_link, proxies=proxy, headers=headers, timeout=5, verify=False) as response:
             response.raise_for_status()
             print(f"{C}Proxy {proxy['http']} - {G}Visiting: {absolute_link}")
     except requests.exceptions.RequestException:
